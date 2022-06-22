@@ -5,11 +5,13 @@ Date: September 2017/2018
 """
 from __future__ import print_function
 
-import numpy as np
+import math
+import os
+
 import cv2
-import os, math
-from scipy.optimize import leastsq
+import numpy as np
 from PIL import Image
+from scipy.optimize import leastsq
 
 TOP_Y_MIN = -30
 TOP_Y_MAX = +30
@@ -626,9 +628,9 @@ def compute_box_3d(obj, P):
     corners_3d[2, :] = corners_3d[2, :] + obj.t[2]
     # print 'cornsers_3d: ', corners_3d
     # only draw 3d bounding box for objs in front of the camera
-    if np.any(corners_3d[2, :] < 0.1):
-        corners_2d = None
-        return corners_2d, np.transpose(corners_3d)
+    # if np.any(corners_3d[2, :] < 0.1):
+    #     corners_2d = None
+    #     return corners_2d, np.transpose(corners_3d)
 
     # project the 3d bounding box into the image plane
     corners_2d = project_to_image(np.transpose(corners_3d), P)
